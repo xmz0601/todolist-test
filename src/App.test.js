@@ -1,8 +1,16 @@
-import { render, screen } from '@testing-library/react';
+import React from 'react';
 import App from './App';
+import Enzyme, { shallow, mount } from 'enzyme';
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+Enzyme.configure({ adapter: new Adapter() });
+
+test('renders without crashing', () => {
+  const wrapper = shallow(<App />);
+  const container = wrapper.find('[data-test="app-container"]');
+  // console.log(wrapper.debug());
+  // expect(container.length).toBe(1);
+  // expect(container.prop('title')).toBe('test');
+  expect(container).toExist();
+  expect(container).toHaveProp('title', 'test');
 });
